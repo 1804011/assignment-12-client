@@ -1,0 +1,23 @@
+[
+	{
+		"_id": 1,
+		"img": "https://api.lorem.space/image/face?hash=3174",
+		"name": "Ema watson",
+		"review": "this is a good place to buy parts of computer",
+		"rating": 4
+	},
+	{
+		"_id": 2,
+		"img": "https://api.lorem.space/image/face?hash=3174",
+		"name": "Ema watson",
+		"review": "this is a good place to buy parts of computer",
+		"rating": 4
+	},
+	{
+		"_id": 3,
+		"img": "https://api.lorem.space/image/face?hash=3174",
+		"name": "Ema watson",
+		"review": "this is a good place to buy parts of computer",
+		"rating": 4
+	}
+]
