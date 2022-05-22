@@ -1,0 +1,39 @@
+[
+	{
+		"_id": 1,
+
+		"img": "cpu",
+		"name": "CPU",
+		"description": "We Provide Cpu for computers of different brand",
+		"stock": 23,
+		"min": 12,
+		"price": 67
+	},
+	{
+		"_id": 2,
+		"img": "cpu",
+		"name": "CPU",
+		"description": "We Provide Cpu for computers of different brand",
+		"stock": 23,
+		"min": 12,
+		"price": 67
+	},
+	{
+		"_id": 3,
+		"img": "cpu",
+		"name": "CPU",
+		"description": "We Provide Cpu for computers of different brand",
+		"stock": 23,
+		"min": 12,
+		"price": 67
+	},
+	{
+		"_id": 4,
+		"img": "cpu",
+		"name": "CPU",
+		"description": "We Provide Cpu for computers of different brand",
+		"stock": 23,
+		"min": 12,
+		"price": 67
+	}
+]
