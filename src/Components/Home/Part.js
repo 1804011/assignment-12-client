@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Part = ({ img, name, description, stock, min, price }) => {
+const Part = ({ _id, img, name, description, stock, min, price }) => {
 	return (
 		<div class="card w-80 bg-base-100 shadow-xl border-2">
 			<figure class="px-10 pt-10">
@@ -17,7 +18,9 @@ const Part = ({ img, name, description, stock, min, price }) => {
 					Price:<span style={{ color: "orange" }}>${price}</span>
 				</h1>
 				<div class="card-actions">
-					<button class="btn btn-primary">Buy Now</button>
+					<Link to={`/parts/${_id}`}>
+						<button class="btn btn-primary">Buy Now</button>
+					</Link>
 				</div>
 			</div>
 		</div>
