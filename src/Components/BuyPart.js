@@ -7,9 +7,8 @@ const BuyPart = () => {
 	const { _id } = useParams();
 	return (
 		<div>
-			<Header />
 			<div className="flex justify-center my-[36px]">
-				<div class="card w-96 bg-base-100 shadow-xl lg:p-12 mx-[16px] lg:m-0">
+				<div class="card border-2 w-96 bg-base-100 shadow-xl lg:p-12 mx-[16px] lg:m-0">
 					<figure class="px-10 pt-10">
 						<img src={""} alt="cpu" class="rounded-xl" />
 					</figure>
