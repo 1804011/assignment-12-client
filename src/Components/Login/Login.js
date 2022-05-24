@@ -14,6 +14,7 @@ const Login = () => {
 	const [signInWithEmailAndPassword, user, loading, error] =
 		useSignInWithEmailAndPassword(auth);
 	const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const email = emailRef.current.value;
@@ -83,7 +84,11 @@ const Login = () => {
 							</small>
 						</form>
 						<div class="divider">OR</div>
-						<button type="button" className="w-full btn btn-dark text-white">
+						<button
+							type="button"
+							onClick={() => signInWithGoogle()}
+							className="w-full btn btn-dark text-white"
+						>
 							Continue With Google
 						</button>
 					</div>

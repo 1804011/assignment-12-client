@@ -1,7 +1,10 @@
 import React from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {
+	useCreateUserWithEmailAndPassword,
+	useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 const Signup = () => {
 	const navigate = useNavigate();
@@ -12,15 +15,20 @@ const Signup = () => {
 	} = useForm();
 	const [createUserWithEmailAndPassword, user, loading, error] =
 		useCreateUserWithEmailAndPassword(auth);
+	const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+
 	const onSubmit = (data) => {
 		const { email, password } = data;
 		createUserWithEmailAndPassword(email, password);
 	};
-	if (loading) {
+	if (loading || gLoading) {
 		return <p>Loading...</p>;
 	}
 	if (user) {
 		navigate("/login");
+	}
+	if (gUser) {
+		navigate("/");
 	}
 	return (
 		<div>
@@ -85,7 +93,11 @@ const Signup = () => {
 							</small>
 						</form>
 						<div class="divider">OR</div>
-						<button type="button" className="w-full btn btn-dark text-white">
+						<button
+							onClick={() => signInWithGoogle()}
+							type="button"
+							className="w-full btn btn-dark text-white"
+						>
 							Continue With Google
 						</button>
 					</div>
