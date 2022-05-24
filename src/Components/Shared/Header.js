@@ -10,15 +10,26 @@ const Header = () => {
 			<li className="px-[6px]">
 				<Link to="/">Home</Link>
 			</li>
+			<li className="px-[6px]">
+				<Link to="/blogs">Blogs</Link>
+			</li>
+			<li className="px-[6px]">
+				<Link to="/portfolio">My Portfolio</Link>
+			</li>
 
 			{!user ? (
 				<li className="px-[6px]">
 					<Link to="/login">Login</Link>
 				</li>
 			) : (
-				<li className="px-[6px]">
-					<button onClick={() => signOut(auth)}>Logout</button>
-				</li>
+				<>
+					<li className="px-[6px]">
+						<span>{user?.displayName}</span>
+					</li>
+					<li className="px-[6px]">
+						<button onClick={() => signOut(auth)}>Logout</button>
+					</li>
+				</>
 			)}
 		</>
 	);
