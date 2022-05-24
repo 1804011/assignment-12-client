@@ -14,7 +14,6 @@ const Signup = () => {
 		useCreateUserWithEmailAndPassword(auth);
 	const onSubmit = (data) => {
 		const { email, password } = data;
-		alert(email + " " + password);
 		createUserWithEmailAndPassword(email, password);
 	};
 	if (loading) {

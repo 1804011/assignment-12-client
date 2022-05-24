@@ -1,17 +1,31 @@
 import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {
+	useCreateUserWithEmailAndPassword,
+	useSignInWithEmailAndPassword,
+	useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 
 const Login = () => {
 	const emailRef = useRef("");
 	const passwordRef = useRef("");
 	const navigate = useNavigate();
-	const [createUserWithEmailAndPassword, user, loading, error] =
-		useCreateUserWithEmailAndPassword(auth);
+	const [signInWithEmailAndPassword, user, loading, error] =
+		useSignInWithEmailAndPassword(auth);
+	const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		const email = emailRef.current.value;
+		const password = passwordRef.current.value;
+		signInWithEmailAndPassword(email, password);
 	};
+	if (loading || gLoading) {
+		return <p>Loading...</p>;
+	}
+	if (user || gUser) {
+		navigate("/");
+	}
 	return (
 		<div>
 			<div className="flex flex-col items-center">
@@ -34,7 +48,7 @@ const Login = () => {
 								/>
 								<label class="label">
 									<span class="label-text-alt font-semibold text-[red] my-[-4px]">
-										*wrong email
+										{error?.message.includes("user") && <>*wrong email</>}
 									</span>
 								</label>
 							</div>
@@ -50,7 +64,9 @@ const Login = () => {
 								/>
 								<label class="label my-[-4px]">
 									<span class="label-text-alt font-semibold text-[red]">
-										*wrong password
+										{error?.message.includes("password") && (
+											<>*wrong password</>
+										)}
 									</span>
 								</label>
 							</div>
@@ -73,7 +89,6 @@ const Login = () => {
 					</div>
 				</div>
 			</div>
-			{error && error?.message}
 		</div>
 	);
 };
