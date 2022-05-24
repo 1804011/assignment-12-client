@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useParams } from "react-router-dom";
 import auth from "../firebase.init";
@@ -10,7 +10,9 @@ const BuyPart = () => {
 	const [part, setPart] = useState({});
 	const [user, loading, error] = useAuthState(auth);
 	const [orderQuantity, setOrderQuantity] = useState(0);
-
+	const [modal, setModal] = useState(true);
+	const addressRef = useRef("");
+	const phoneRef = useRef("");
 	useEffect(() => {
 		fetch(`http://localhost:5000/parts/${_id}`)
 			.then((res) => res.json())
@@ -20,6 +22,35 @@ const BuyPart = () => {
 	useEffect(() => {
 		setOrderQuantity(min || 0);
 	}, [part]);
+	const handlePurchase = (e) => {
+		e.preventDefault();
+		const phone = phoneRef.current.value;
+		const address = addressRef.current.value;
+		const service = name;
+		const data = {
+			name: user?.displayName,
+			email: user?.email,
+			part: name,
+			price,
+			orderQuantity,
+			phone,
+			address,
+			img,
+		};
+		fetch("http://localhost:5000/orders", {
+			method: "POST",
+			headers: {
+				"content-type": "application/json",
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				if (data?.acknowledged) {
+					setModal(false);
+				}
+			});
+	};
 	return (
 		<div>
 			<div className="flex justify-center my-[36px]">
@@ -50,102 +81,113 @@ const BuyPart = () => {
 						</div>
 
 						<input type="checkbox" id="my-modal-3" class="modal-toggle" />
-						<div class="modal">
-							<div class="modal-box relative">
-								<label
-									for="my-modal-3"
-									class="btn btn-sm btn-circle absolute right-2 top-2"
-								>
-									✕
-								</label>
-								<h2 className="text-center text-3xl font-semibold m-4 my-0">
-									{name}
-								</h2>
-								<form className="flex flex-col items-center ">
-									<div class="form-control w-full max-w-xs">
-										<label class="label">
-											<span class="label-text font-semibold">Name</span>
-										</label>
-										<input
-											type="text"
-											value={user?.displayName}
-											placeholder="Your Name"
-											class="input input-bordered w-full max-w-xs"
-											readOnly
-										/>
-									</div>
-									<div class="form-control w-full max-w-xs">
-										<label class="label">
-											<span class="label-text font-semibold">Email</span>
-										</label>
-										<input
-											type="email"
-											placeholder="Enter Your Email"
-											value={user?.email}
-											class="input input-bordered w-full max-w-xs"
-											readOnly
-										/>
-									</div>
-									<div class="form-control w-full max-w-xs">
-										<label class="label">
-											<span class="label-text font-semibold">Phone Number</span>
-										</label>
-										<input
-											type="text"
-											required
-											placeholder="Enter Your Mobile No"
-											class="input input-bordered w-full max-w-xs"
-										/>
-									</div>
-									<div class="form-control w-full max-w-xs">
-										<label class="label">
-											<span class="label-text font-semibold">
-												Order Quantity
-											</span>
-										</label>
-										<input
-											type="number"
-											min={min}
-											max={stock}
-											required
-											onChange={(e) => setOrderQuantity(e.target.value)}
-											value={orderQuantity}
-											placeholder="Enter Order Quantity"
-											class="input input-bordered w-full max-w-xs"
-										/>
-										<label class="label">
-											<span class="label-text-alt text-[red] font-semibold">
-												{(orderQuantity < min && (
-													<>*Order Quantity must be at least {min}</>
-												)) ||
-													(orderQuantity > stock && (
-														<>*Order quantity can't exceed stock size</>
-													))}
-											</span>
-										</label>
-									</div>
+						{modal && (
+							<div class="modal">
+								<div class="modal-box relative">
+									<label
+										for="my-modal-3"
+										class="btn btn-sm btn-circle absolute right-2 top-2"
+									>
+										✕
+									</label>
+									<h2 className="text-center text-3xl font-semibold m-4 my-0">
+										{name}
+									</h2>
+									<form
+										onSubmit={handlePurchase}
+										className="flex flex-col items-center"
+									>
+										<div class="form-control w-full max-w-xs">
+											<label class="label">
+												<span class="label-text font-semibold">Name</span>
+											</label>
+											<input
+												type="text"
+												value={user?.displayName}
+												placeholder="Your Name"
+												class="input input-bordered w-full max-w-xs"
+												readOnly
+											/>
+										</div>
+										<div class="form-control w-full max-w-xs">
+											<label class="label">
+												<span class="label-text font-semibold">Email</span>
+											</label>
+											<input
+												type="email"
+												placeholder="Enter Your Email"
+												value={user?.email}
+												class="input input-bordered w-full max-w-xs"
+												readOnly
+											/>
+										</div>
+										<div class="form-control w-full max-w-xs">
+											<label class="label">
+												<span class="label-text font-semibold">
+													Phone Number
+												</span>
+											</label>
+											<input
+												type="text"
+												required
+												ref={phoneRef}
+												placeholder="Enter Your Mobile No"
+												class="input input-bordered w-full max-w-xs"
+											/>
+										</div>
+										<div class="form-control w-full max-w-xs">
+											<label class="label">
+												<span class="label-text font-semibold">
+													Order Quantity
+												</span>
+											</label>
+											<input
+												type="number"
+												min={min}
+												max={stock}
+												required
+												onChange={(e) => setOrderQuantity(e.target.value)}
+												value={orderQuantity}
+												placeholder="Enter Order Quantity"
+												class="input input-bordered w-full max-w-xs"
+											/>
+											<label class="label">
+												<span class="label-text-alt text-[red] font-semibold">
+													{(orderQuantity < min && (
+														<>*Order Quantity must be at least {min}</>
+													)) ||
+														(orderQuantity > stock && (
+															<>*Order quantity can't exceed stock size</>
+														))}
+												</span>
+											</label>
+										</div>
 
-									<div class="form-control w-full max-w-xs mt-[-12px]">
-										<label class="label">
-											<span class="label-text font-semibold">Your Address</span>
-										</label>
-										<textarea
-											class="textarea textarea-bordered w-full max-w-xs"
-											placeholder="Your Address"
-											required
-											style={{ resize: "none" }}
-										></textarea>
-									</div>
+										<div class="form-control w-full max-w-xs mt-[-12px]">
+											<label class="label">
+												<span class="label-text font-semibold">
+													Your Address
+												</span>
+											</label>
+											<textarea
+												class="textarea textarea-bordered w-full max-w-xs"
+												placeholder="Your Address"
+												required
+												ref={addressRef}
+												style={{ resize: "none" }}
+											></textarea>
+										</div>
 
-									<input
-										type="submit"
-										value="Confirm Purchase"
-										disabled={orderQuantity < min || orderQuantity > stock}
-										className="btn btn-primary w-full max-w-xs my-4"
-									/>
-								</form>
+										<input
+											type="submit"
+											value="Confirm Purchase"
+											disabled={orderQuantity < min || orderQuantity > stock}
+											className="btn btn-primary w-full max-w-xs my-4"
+										/>
+									</form>
+								</div>
 							</div>
-						</div>
+						)}
 					</div>
 				</div>
 			</div>
