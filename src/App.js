@@ -9,6 +9,7 @@ import Signup from "./Components/Signup/Signup";
 import RequireAuth from "./Components/RequireAuth";
 import Blogs from "./Components/Blogs";
 import MyPortfolio from "./Components/MyPortfolio";
+import NotFound from "./Components/Shared/NotFound";
 function App() {
 	return (
 		<div>
@@ -19,6 +20,7 @@ function App() {
 				<Route path="/signup" element={<Signup />}></Route>
 				<Route path="/blogs" element={<Blogs />}></Route>
 				<Route path="/portfolio" element={<MyPortfolio />}></Route>
+				<Route path="*" element={<NotFound />}></Route>
 
 				<Route
 					path={`/parts/:_id`}
