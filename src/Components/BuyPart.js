@@ -1,26 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useParams } from "react-router-dom";
+import auth from "../firebase.init";
 import Part from "./Home/Part";
 import Header from "./Shared/Header";
 
 const BuyPart = () => {
 	const { _id } = useParams();
+	const [part, setPart] = useState({});
+	const [user, loading, error] = useAuthState(auth);
+	const [orderQuantity, setOrderQuantity] = useState(0);
+
+	useEffect(() => {
+		fetch(`http://localhost:5000/parts/${_id}`)
+			.then((res) => res.json())
+			.then((data) => setPart(data));
+	}, []);
+	const { img, name, description, price, min, stock } = part;
+	useEffect(() => {
+		setOrderQuantity(min || 0);
+	}, [part]);
 	return (
 		<div>
 			<div className="flex justify-center my-[36px]">
 				<div class="card border-2 w-96 bg-base-100 shadow-xl lg:p-12 mx-[16px] lg:m-0">
 					<figure class="px-10 pt-10">
-						<img src={""} alt="cpu" class="rounded-xl" />
+						<img src={img} alt={`${name}`} class="rounded-xl" />
 					</figure>
 					<div class="card-body items-center text-center">
-						<h2 class="card-title text-4xl">CPU</h2>
-						<p className="font-semibold"></p>
-						<h6 className="font-semibold">Available Quantity:23</h6>
+						<h2 class="card-title text-4xl">{name}</h2>
+						<p className="font-semibold">{description}</p>
+						<h6 className="font-semibold">
+							Available Quantity:
+							<span className="text-[orange]">{stock}</span>
+						</h6>
 						<h6 className="font-bold">
-							<small>Minimum Order Quantity: 12</small>
+							<small>
+								Minimum Order Quantity:
+								<span className="text-[orange]"> {min}</span>
+							</small>
 						</h6>
 						<h1 className="text-2xl font-semibold my-3">
-							Price:<span style={{ color: "orange" }}>${67}</span>
+							Price:<span style={{ color: "orange" }}>${price}</span>
 						</h1>
 						<div class="card-actions">
 							<label for="my-modal-3" class="btn modal-button btn-primary">
@@ -37,8 +58,8 @@ const BuyPart = () => {
 								>
 									✕
 								</label>
-								<h2 className="text-center font-semibold m-4">
-									Please provide purchase information
+								<h2 className="text-center text-3xl font-semibold m-4 my-0">
+									{name}
 								</h2>
 								<form className="flex flex-col items-center ">
 									<div class="form-control w-full max-w-xs">
@@ -47,8 +68,10 @@ const BuyPart = () => {
 										</label>
 										<input
 											type="text"
+											value={user?.displayName}
 											placeholder="Your Name"
 											class="input input-bordered w-full max-w-xs"
+											readOnly
 										/>
 									</div>
 									<div class="form-control w-full max-w-xs">
@@ -58,7 +81,9 @@ const BuyPart = () => {
 										<input
 											type="email"
 											placeholder="Enter Your Email"
+											value={user?.email}
 											class="input input-bordered w-full max-w-xs"
+											readOnly
 										/>
 									</div>
 									<div class="form-control w-full max-w-xs">
@@ -67,6 +92,7 @@ const BuyPart = () => {
 										</label>
 										<input
 											type="text"
+											required
 											placeholder="Enter Your Mobile No"
 											class="input input-bordered w-full max-w-xs"
 										/>
@@ -79,27 +105,42 @@ const BuyPart = () => {
 										</label>
 										<input
 											type="number"
-											min={5}
-											value={5}
+											min={min}
+											max={stock}
+											required
+											onChange={(e) => setOrderQuantity(e.target.value)}
+											value={orderQuantity}
 											placeholder="Enter Order Quantity"
 											class="input input-bordered w-full max-w-xs"
 										/>
+										<label class="label">
+											<span class="label-text-alt text-[red] font-semibold">
+												{(orderQuantity < min && (
+													<>*Order Quantity must be at least {min}</>
+												)) ||
+													(orderQuantity > stock && (
+														<>*Order quantity can't exceed stock size</>
+													))}
+											</span>
+										</label>
 									</div>
 
-									<div class="form-control w-full max-w-xs">
+									<div class="form-control w-full max-w-xs mt-[-12px]">
 										<label class="label">
-											<span class="label-text font-semibold">Address</span>
+											<span class="label-text font-semibold">Your Address</span>
 										</label>
-										<input
-											type="text"
-											placeholder="Provide Your Address"
-											class="input input-bordered w-full max-w-xs"
-										/>
+										<textarea
+											class="textarea textarea-bordered w-full max-w-xs"
+											placeholder="Your Address"
+											required
+											style={{ resize: "none" }}
+										></textarea>
 									</div>
 
 									<input
 										type="submit"
 										value="Confirm Purchase"
+										disabled={orderQuantity < min || orderQuantity > stock}
 										className="btn btn-primary w-full max-w-xs my-4"
 									/>
 								</form>

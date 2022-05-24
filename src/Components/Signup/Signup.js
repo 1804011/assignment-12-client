@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useUpdateProfile } from "react-firebase-hooks/auth";
 import {
 	useCreateUserWithEmailAndPassword,
 	useSignInWithGoogle,
@@ -16,10 +17,12 @@ const Signup = () => {
 	const [createUserWithEmailAndPassword, user, loading, error] =
 		useCreateUserWithEmailAndPassword(auth);
 	const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+	const [updateProfile, updating, updatingError] = useUpdateProfile(auth);
 
-	const onSubmit = (data) => {
-		const { email, password } = data;
-		createUserWithEmailAndPassword(email, password);
+	const onSubmit = async (data) => {
+		const { email, password, name } = data;
+		await createUserWithEmailAndPassword(email, password);
+		await updateProfile({ displayName: name });
 	};
 	if (loading || gLoading) {
 		return <p>Loading...</p>;
@@ -33,13 +36,32 @@ const Signup = () => {
 	return (
 		<div>
 			<div className="flex flex-col items-center">
-				<div class="card w-80 lg:w-96 bg-base-100 shadow-xl my-[48px] border-2">
+				<div class="card w-80 lg:w-96 bg-base-100 shadow-xl my-[8px] lg:my-[48px] border-2">
 					<div class="card-body  flex flex-cols items-center">
 						<h2 class="card-title text-center">Signup</h2>
 						<form
 							onSubmit={handleSubmit(onSubmit)}
 							className="flex flex-col items-center w-full"
 						>
+							<div class="form-control w-full max-w-xs">
+								<label class="label">
+									<span class="label-text font-semibold">Name</span>
+								</label>
+								<input
+									type="text"
+									{...register("name", {
+										required: true,
+									})}
+									placeholder="Enter Your Name"
+									class="input input-bordered w-full max-w-xs"
+								/>
+								<label class="label">
+									<span class="label-text-alt font-semibold text-[red] my-[-4px]">
+										{(errors.name && <>*name is required</>) ||
+											(error && <>*email already in use</>)}
+									</span>
+								</label>
+							</div>
 							<div class="form-control w-full max-w-xs">
 								<label class="label">
 									<span class="label-text font-semibold">Email</span>

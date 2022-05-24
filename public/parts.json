@@ -1,8 +1,8 @@
 [
 	{
-		"_id": 1,
+		"id": 1,
 
-		"img": "cpu",
+		"img": "https://i.ibb.co/XZ6VsGt/cpu.jpg",
 		"name": "CPU",
 		"description": "We Provide Cpu for computers of different brand",
 		"stock": 23,
@@ -10,30 +10,30 @@
 		"price": 67
 	},
 	{
-		"_id": 2,
-		"img": "cpu",
-		"name": "CPU",
-		"description": "We Provide Cpu for computers of different brand",
-		"stock": 23,
-		"min": 12,
-		"price": 67
+		"id": 2,
+		"img": "https://i.ibb.co/6sBn5nR/keyboard2.jpg",
+		"name": "KeyBoard",
+		"description": "We Provide keyboard for computers of different brand",
+		"stock": 15,
+		"min": 2,
+		"price": 6
 	},
 	{
-		"_id": 3,
-		"img": "cpu",
-		"name": "CPU",
-		"description": "We Provide Cpu for computers of different brand",
-		"stock": 23,
-		"min": 12,
-		"price": 67
+		"id": 3,
+		"img": "https://i.ibb.co/FnyTX1k/monitor.jpg",
+		"name": "Monitor",
+		"description": "We Provide monitor for computers of different brand",
+		"stock": 18,
+		"min": 5,
+		"price": 45
 	},
 	{
-		"_id": 4,
-		"img": "cpu",
-		"name": "CPU",
-		"description": "We Provide Cpu for computers of different brand",
-		"stock": 23,
-		"min": 12,
-		"price": 67
+		"id": 4,
+		"img": "https://i.ibb.co/5T1C4Wf/ssd.jpg",
+		"name": "SSD card",
+		"description": "We Provide SSD for computers of different brand",
+		"stock": 25,
+		"min": 6,
+		"price": 55
 	}
 ]
