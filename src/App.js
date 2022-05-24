@@ -6,7 +6,7 @@ import BuyPart from "./Components/BuyPart";
 import Header from "./Components/Shared/Header";
 import Login from "./Components/Login/Login";
 import Signup from "./Components/Signup/Signup";
-
+import RequireAuth from "./Components/RequireAuth";
 function App() {
 	return (
 		<div>
@@ -16,7 +16,14 @@ function App() {
 				<Route path="/login" element={<Login />}></Route>
 				<Route path="/signup" element={<Signup />}></Route>
 
-				<Route path={`/parts/:_id`} element={<BuyPart />}></Route>
+				<Route
+					path={`/parts/:_id`}
+					element={
+						<RequireAuth>
+							<BuyPart />
+						</RequireAuth>
+					}
+				></Route>
 			</Routes>
 		</div>
 	);

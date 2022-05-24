@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
 	useCreateUserWithEmailAndPassword,
 	useSignInWithEmailAndPassword,
@@ -11,6 +11,7 @@ const Login = () => {
 	const emailRef = useRef("");
 	const passwordRef = useRef("");
 	const navigate = useNavigate();
+	let location = useLocation();
 	const [signInWithEmailAndPassword, user, loading, error] =
 		useSignInWithEmailAndPassword(auth);
 	const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -21,16 +22,18 @@ const Login = () => {
 		const password = passwordRef.current.value;
 		signInWithEmailAndPassword(email, password);
 	};
+	let from = location.state?.from?.pathname || "/";
 	if (loading || gLoading) {
 		return <p>Loading...</p>;
 	}
+
 	if (user || gUser) {
-		navigate("/");
+		navigate(from, { replace: true });
 	}
 	return (
 		<div>
 			<div className="flex flex-col items-center">
-				<div class="card w-96 bg-base-100 shadow-xl lg:my-[48px] border-2">
+				<div class="card w-80 lg:w-96 bg-base-100 shadow-xl my-[48px] border-2 mx-[16px]">
 					<div class="card-body  flex flex-cols items-center">
 						<h2 class="card-title text-center">Login</h2>
 						<form

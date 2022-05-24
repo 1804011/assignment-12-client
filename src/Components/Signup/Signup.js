@@ -33,7 +33,7 @@ const Signup = () => {
 	return (
 		<div>
 			<div className="flex flex-col items-center">
-				<div class="card w-96 bg-base-100 shadow-xl lg:my-[48px] border-2">
+				<div class="card w-80 lg:w-96 bg-base-100 shadow-xl my-[48px] border-2">
 					<div class="card-body  flex flex-cols items-center">
 						<h2 class="card-title text-center">Signup</h2>
 						<form
