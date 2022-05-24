@@ -21,7 +21,36 @@ const MyPortfolio = () => {
 				<li className="my-3">SSC: Government Muslim High School, Chittagong</li>
 			</ul>
 			<h2 className="text-center my-8 text-2xl font-bold">My Skills</h2>
-			<div className="flex flex-wrap justify-center"></div>
+			<div className="flex flex-wrap justify-center">
+				<button class="btn btn-sm mx-3 my-2">HTML</button>
+				<button class="btn btn-sm mx-3 my-2">CSS</button>
+				<button class="btn btn-sm mx-3 my-2">BOOTSTRAP</button>
+				<button class="btn btn-sm mx-3 my-2">TAILWIND</button>
+				<button class="btn btn-sm mx-3 my-2">Javascript</button>
+				<button class="btn btn-sm mx-3 my-2">REACT Js</button>
+				<button class="btn btn-sm mx-3 my-2">NODE js</button>
+				<button class="btn btn-sm mx-3 my-2">MONGODB</button>
+				<button class="btn btn-sm mx-3 my-2">NoSql</button>
+				<button class="btn btn-sm mx-3 my-2">Mysql</button>
+			</div>
+			<h2 className="text-center text-2xl font-bold my-4">My Website</h2>
+			<div className="flex flex-wrap justify-center m-4">
+				<button className="btn btn-sm mx-3 my-2">
+					<a href="https://assignment-11-124e0.firebaseapp.com">
+						Electronics Inventory
+					</a>
+				</button>
+				<button className="btn btn-sm mx-3 my-2">
+					<a href="https://assignment-10-e432d.firebaseapp.com">
+						Health Solution
+					</a>
+				</button>
+				<button className="btn btn-sm mx-3 my-2">
+					<a href="https://sharif-assigments9.netlify.app">
+						Laptop Review Website
+					</a>
+				</button>
+			</div>
 		</div>
 	);
 };
