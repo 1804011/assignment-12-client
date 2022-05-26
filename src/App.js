@@ -13,6 +13,7 @@ import NotFound from "./Components/Shared/NotFound";
 import Dashboard from "./Components/DashBoard/Dashboard";
 import MyOrders from "./Components/DashBoard/MyOrders";
 import AddReview from "./Components/DashBoard/AddReview";
+import MyProfile from "./Components/DashBoard/MyProfile";
 function App() {
 	return (
 		<div>
@@ -31,8 +32,8 @@ function App() {
 						</RequireAuth>
 					}
 				>
-					<Route index element={"my profile"}></Route>
-					<Route path="dashboard" element={"my profile"}></Route>
+					<Route index element={<MyProfile />}></Route>
+					<Route path="dashboard" element={<MyProfile />}></Route>
 					<Route path="my-orders" element={<MyOrders />}></Route>
 					<Route path="my-reviews" element={<AddReview />}></Route>
 					<Route path="*" element={<NotFound />}></Route>

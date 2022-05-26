@@ -7,6 +7,7 @@ import {
 	useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
+import axios from "axios";
 const Signup = () => {
 	const navigate = useNavigate();
 	const {
@@ -23,6 +24,12 @@ const Signup = () => {
 		const { email, password, name } = data;
 		await createUserWithEmailAndPassword(email, password);
 		await updateProfile({ displayName: name });
+		axios
+			.post("http://localhost:5000/users", { email, name })
+			.then(({ data }) => {
+				if (data?.acknowledged) {
+				}
+			});
 	};
 	if (loading || gLoading) {
 		return <p>Loading...</p>;
