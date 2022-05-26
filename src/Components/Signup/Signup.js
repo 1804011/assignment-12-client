@@ -55,12 +55,6 @@ const Signup = () => {
 									placeholder="Enter Your Name"
 									class="input input-bordered w-full max-w-xs"
 								/>
-								<label class="label">
-									<span class="label-text-alt font-semibold text-[red] my-[-4px]">
-										{(errors.name && <>*name is required</>) ||
-											(error && <>*email already in use</>)}
-									</span>
-								</label>
 							</div>
 							<div class="form-control w-full max-w-xs">
 								<label class="label">

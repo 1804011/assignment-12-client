@@ -12,6 +12,7 @@ import MyPortfolio from "./Components/MyPortfolio";
 import NotFound from "./Components/Shared/NotFound";
 import Dashboard from "./Components/DashBoard/Dashboard";
 import MyOrders from "./Components/DashBoard/MyOrders";
+import AddReview from "./Components/DashBoard/AddReview";
 function App() {
 	return (
 		<div>
@@ -33,7 +34,7 @@ function App() {
 					<Route index element={"my profile"}></Route>
 					<Route path="dashboard" element={"my profile"}></Route>
 					<Route path="my-orders" element={<MyOrders />}></Route>
-					<Route path="my-reviews" element={"my reviews"}></Route>
+					<Route path="my-reviews" element={<AddReview />}></Route>
 					<Route path="*" element={<NotFound />}></Route>
 				</Route>
 				<Route path="*" element={<NotFound />}></Route>
