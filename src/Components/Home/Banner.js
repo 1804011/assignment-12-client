@@ -1,11 +1,11 @@
 import React from "react";
-import pc_parts from "../../images/pc_parts.jfif";
+import parts from "../../images/parts.jpg";
 const Banner = () => {
 	return (
 		<section>
 			<div class="hero min-h-screen">
 				<div class="hero-content flex-col lg:flex-row-reverse">
-					<img src={pc_parts} class="max-w-sm rounded-lg shadow-2xl lg:w-1/2" />
+					<img src={parts} class="max-w-xs rounded-lg shadow-2xl lg:w-1/2" />
 					<div className="lg:w-1/2 ">
 						<h1 class="text-5xl font-bold">
 							We manufacture various parts of pc

@@ -10,9 +10,11 @@ const MyProfile = () => {
 		return <p>Loading...</p>;
 	}
 	useEffect(() => {
-		axios.get(`http://localhost:5000/users/${user?.email}`).then(({ data }) => {
-			setProfile(data);
-		});
+		axios
+			.get(`https://desolate-journey-82772.herokuapp.com/users/${user?.email}`)
+			.then(({ data }) => {
+				setProfile(data);
+			});
 	}, []);
 	const { name, email, location, social, phone, institution } = profile;
 	const nameRef = useRef(name);
@@ -32,7 +34,10 @@ const MyProfile = () => {
 			institution: instituteRef.current?.value,
 		};
 		axios
-			.put(`http://localhost:5000/users/${user?.email}`, data)
+			.put(
+				`https://desolate-journey-82772.herokuapp.com/users/${user?.email}`,
+				data
+			)
 			.then(({ data }) => {});
 	};
 	return (

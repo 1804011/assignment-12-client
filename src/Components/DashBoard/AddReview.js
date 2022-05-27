@@ -15,7 +15,7 @@ const AddReview = () => {
 		const rating = ratingRef.current.value;
 		const review = reviewRef.current.value;
 		axios
-			.post("http://localhost:5000/reviews", {
+			.post("https://desolate-journey-82772.herokuapp.com/reviews", {
 				rating,
 				review,
 				name: user?.displayName,

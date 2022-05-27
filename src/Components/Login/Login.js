@@ -6,12 +6,14 @@ import {
 	useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
-
+import axios from "axios";
+import { useAuthState } from "react-firebase-hooks/auth";
 const Login = () => {
 	const emailRef = useRef("");
 	const passwordRef = useRef("");
 	const navigate = useNavigate();
 	let location = useLocation();
+	const [userInfo, userLoading, userError] = useAuthState(auth);
 	const [signInWithEmailAndPassword, user, loading, error] =
 		useSignInWithEmailAndPassword(auth);
 	const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -21,12 +23,28 @@ const Login = () => {
 		const email = emailRef.current.value;
 		const password = passwordRef.current.value;
 		signInWithEmailAndPassword(email, password);
+
+		axios
+			.post("https://desolate-journey-82772.herokuapp.com/login", { email })
+			.then(({ data }) => {
+				console.log(data);
+				localStorage.setItem("access-token", data?.token);
+			});
 	};
 	let from = location.state?.from?.pathname || "/";
-	if (loading || gLoading) {
+	if (loading || gLoading || userLoading) {
 		return <p>Loading...</p>;
 	}
+	if (userInfo) {
+		console.log("userInfo", userInfo.email);
+		axios
+			.put("https://desolate-journey-82772.herokuapp.com/users", {
+				email: userInfo?.email,
+				name: userInfo?.displayName,
+			})
 
+			.then(({ data }) => {});
+	}
 	if (user || gUser) {
 		navigate(from, { replace: true });
 	}

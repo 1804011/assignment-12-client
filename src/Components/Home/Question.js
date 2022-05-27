@@ -1,3 +1,5 @@
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 const Question = () => {
@@ -29,6 +31,9 @@ const Question = () => {
 								resize: "none",
 							}}
 						></textarea>
+						<button type="submit" className="ml-auto  font-bold">
+							Send<FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon>
+						</button>
 					</form>
 				</div>
 			</div>

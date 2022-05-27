@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, Outlet } from "react-router-dom";
+import checkAdmin from "../../checkAdmin";
+import auth from "../../firebase.init";
+import useAdmin from "../../Hooks/useAdmin";
 
 const Dashboard = () => {
+	const [user, uLoading, uError] = useAuthState(auth);
+	const [admin, setAdmin] = useState(false);
+	if (uLoading) {
+		return <p>Loading...</p>;
+	}
+	useEffect(() => {
+		fetch(`https://desolate-journey-82772.herokuapp.com/users/${user?.email}`)
+			.then((res) => res.json())
+			.then((data) => {
+				if (data?.role == "admin") {
+					setAdmin(true);
+				}
+			});
+	}, []);
 	return (
 		<div>
 			<div class="drawer drawer-mobile">
@@ -15,12 +33,36 @@ const Dashboard = () => {
 						<li className="font-semibold my-1 p-0">
 							<Link to="/dashboard">My Profile</Link>
 						</li>
-						<li className="font-semibold my-1">
-							<Link to="my-orders">My Orders</Link>
-						</li>
-						<li className="font-semibold my-1">
-							<Link to="my-reviews">Add Review</Link>
-						</li>
+						{admin || (
+							<li className="font-semibold my-1">
+								<Link to="my-orders">My Orders</Link>
+							</li>
+						)}
+						{admin || (
+							<li className="font-semibold my-1">
+								<Link to="add-review">Add Review</Link>
+							</li>
+						)}
+						{admin && (
+							<li className="font-semibold my-1">
+								<Link to="add-product">Add Product</Link>
+							</li>
+						)}
+						{admin && (
+							<li className="font-semibold my-1">
+								<Link to="make-admin">Make Admin</Link>
+							</li>
+						)}
+						{admin && (
+							<li className="font-semibold my-1">
+								<Link to="manage-products">Manage Products</Link>
+							</li>
+						)}
+						{admin && (
+							<li className="font-semibold my-1">
+								<Link to="manage-all-orders">Manage All Orders</Link>
+							</li>
+						)}
 					</ul>
 				</div>
 			</div>

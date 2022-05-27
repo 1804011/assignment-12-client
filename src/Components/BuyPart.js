@@ -14,20 +14,24 @@ const BuyPart = () => {
 	const addressRef = useRef("");
 	const phoneRef = useRef("");
 	useEffect(() => {
-		fetch(`http://localhost:5000/parts/${_id}`)
+		fetch(`https://desolate-journey-82772.herokuapp.com/parts/${_id}`)
 			.then((res) => res.json())
 			.then((data) => setPart(data));
 	}, []);
-	const { img, name, description, price, min, stock } = part;
+	let { img, name, description, price, min, stock } = part;
+	price = parseInt(price);
+	min = parseInt(min);
+	stock = parseInt(stock);
 	useEffect(() => {
-		setOrderQuantity(min || 0);
-	}, [part]);
+		setOrderQuantity(parseInt(min));
+	}, []);
+
 	const handlePurchase = (e) => {
 		e.preventDefault();
 		const phone = phoneRef.current.value;
 		const address = addressRef.current.value;
 		const service = name;
-		const data = {
+		const order = {
 			name: user?.displayName,
 			email: user?.email,
 			part: name,
@@ -37,17 +41,26 @@ const BuyPart = () => {
 			address,
 			img,
 		};
-		fetch("http://localhost:5000/orders", {
+		fetch("https://desolate-journey-82772.herokuapp.com/orders", {
 			method: "POST",
 			headers: {
 				"content-type": "application/json",
 			},
-			body: JSON.stringify(data),
+			body: JSON.stringify(order),
 		})
 			.then((res) => res.json())
 			.then((data) => {
 				if (data?.acknowledged) {
 					setModal(false);
+					fetch(`https://desolate-journey-82772.herokuapp.com/parts/${_id}`, {
+						method: "PUT",
+						headers: {
+							"content-type": "application/json",
+						},
+						body: JSON.stringify(order),
+					})
+						.then((res) => res.json())
+						.then(() => {});
 				}
 			});
 	};
@@ -146,7 +159,9 @@ const BuyPart = () => {
 												min={min}
 												max={stock}
 												required
-												onChange={(e) => setOrderQuantity(e.target.value)}
+												onChange={(e) =>
+													setOrderQuantity(parseInt(e.target.value))
+												}
 												value={orderQuantity}
 												placeholder="Enter Order Quantity"
 												class="input input-bordered w-full max-w-xs"

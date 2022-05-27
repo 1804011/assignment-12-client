@@ -25,7 +25,10 @@ const Signup = () => {
 		await createUserWithEmailAndPassword(email, password);
 		await updateProfile({ displayName: name });
 		axios
-			.post("http://localhost:5000/users", { email, name })
+			.put("https://desolate-journey-82772.herokuapp.com/users", {
+				email,
+				name,
+			})
 			.then(({ data }) => {
 				if (data?.acknowledged) {
 				}
@@ -38,6 +41,13 @@ const Signup = () => {
 		navigate("/login");
 	}
 	if (gUser) {
+		axios
+			.put("https://desolate-journey-82772.herokuapp.com/users", {
+				email: gUser?.user?.email,
+				name: gUser?.user?.displayName,
+			})
+			.then((res) => res.json())
+			.then(({ data }) => {});
 		navigate("/");
 	}
 	return (

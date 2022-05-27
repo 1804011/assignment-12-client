@@ -14,6 +14,9 @@ import Dashboard from "./Components/DashBoard/Dashboard";
 import MyOrders from "./Components/DashBoard/MyOrders";
 import AddReview from "./Components/DashBoard/AddReview";
 import MyProfile from "./Components/DashBoard/MyProfile";
+import AddProduct from "./Components/DashBoard/AddProduct";
+import MakeAdmin from "./Components/DashBoard/MakeAdmin";
+import ManageProducts from "./Components/DashBoard/ManageProducts";
 function App() {
 	return (
 		<div>
@@ -35,7 +38,10 @@ function App() {
 					<Route index element={<MyProfile />}></Route>
 					<Route path="dashboard" element={<MyProfile />}></Route>
 					<Route path="my-orders" element={<MyOrders />}></Route>
-					<Route path="my-reviews" element={<AddReview />}></Route>
+					<Route path="add-review" element={<AddReview />}></Route>
+					<Route path="add-product" element={<AddProduct />}></Route>
+					<Route path="make-admin" element={<MakeAdmin />}></Route>
+					<Route path="manage-products" element={<ManageProducts />}></Route>
 					<Route path="*" element={<NotFound />}></Route>
 				</Route>
 				<Route path="*" element={<NotFound />}></Route>

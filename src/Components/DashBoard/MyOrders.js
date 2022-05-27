@@ -11,18 +11,20 @@ const MyOrders = () => {
 	}
 	const [orders, setOrders] = useState([]);
 	useEffect(() => {
-		fetch(`http://localhost:5000/orders/${user?.email}`)
+		fetch(`https://desolate-journey-82772.herokuapp.com/orders/${user?.email}`)
 			.then((res) => res.json())
 			.then((data) => setOrders(data));
 	}, []);
 	const handleDelete = (id) => {
-		fetch(`http://localhost:5000/orders/${id}`, {
+		fetch(`https://desolate-journey-82772.herokuapp.com/orders/${id}`, {
 			method: "DELETE",
 		})
 			.then((res) => res.json())
 			.then((data) => {
 				if (data?.deletedCount) {
-					fetch(`http://localhost:5000/orders/${user?.email}`)
+					fetch(
+						`https://desolate-journey-82772.herokuapp.com/orders/${user?.email}`
+					)
 						.then((res) => res.json())
 						.then((data) => setOrders(data));
 				}
@@ -31,6 +33,9 @@ const MyOrders = () => {
 	return (
 		<div>
 			<div class="overflow-x-auto mx-[16px]">
+				<h2 className="text-2xl font-bold my-6">
+					My Orders: ({orders?.length})
+				</h2>
 				<table class="table w-full">
 					<thead>
 						<tr>
