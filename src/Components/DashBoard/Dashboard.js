@@ -1,25 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, Outlet } from "react-router-dom";
-import checkAdmin from "../../checkAdmin";
 import auth from "../../firebase.init";
 import useAdmin from "../../Hooks/useAdmin";
-
 const Dashboard = () => {
 	const [user, uLoading, uError] = useAuthState(auth);
-	const [admin, setAdmin] = useState(false);
-	if (uLoading) {
+	const [admin, loading] = useAdmin(user?.email);
+	if (uLoading || loading) {
 		return <p>Loading...</p>;
 	}
-	useEffect(() => {
-		fetch(`https://desolate-journey-82772.herokuapp.com/users/${user?.email}`)
-			.then((res) => res.json())
-			.then((data) => {
-				if (data?.role == "admin") {
-					setAdmin(true);
-				}
-			});
-	}, []);
+
 	return (
 		<div>
 			<div class="drawer drawer-mobile">
