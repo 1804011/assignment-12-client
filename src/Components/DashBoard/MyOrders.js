@@ -12,12 +12,15 @@ const MyOrders = () => {
 	}
 	const [orders, setOrders] = useState([]);
 	useEffect(() => {
-		fetch(`http://localhost:5000/orders/${user?.email}`, {
-			method: "GET",
-			headers: {
-				authorization: authHeader(),
-			},
-		})
+		fetch(
+			`https://desolate-journey-82772.herokuapp.com/orders/${user?.email}`,
+			{
+				method: "GET",
+				headers: {
+					authorization: authHeader(),
+				},
+			}
+		)
 			.then((res) => res.json())
 			.then((data) => setOrders(data));
 	}, []);

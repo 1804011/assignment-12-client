@@ -5,11 +5,11 @@ const useAdmin = (email) => {
 	const [admin, setAdmin] = useState(false);
 	const [loading, setLoading] = useState(true);
 	useEffect(() => {
-		// axios.get(`http://localhost:5000/users/${email}`).then(({ data }) => {
+		// axios.get(`https://desolate-journey-82772.herokuapp.com/users/${email}`).then(({ data }) => {
 		// 	setAdmin(data?.role === "admin");
 		// 	setLoading(false);
 		// });
-		fetch(`http://localhost:5000/users/${email}`, {
+		fetch(`https://desolate-journey-82772.herokuapp.com/users/${email}`, {
 			method: "GET",
 			headers: {
 				authorization: authHeader(),

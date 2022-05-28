@@ -42,7 +42,9 @@ const Signup = () => {
 	}
 	if (uUser) {
 		axios
-			.post("http://localhost:5000/login", { email: uUser?.email })
+			.post("https://desolate-journey-82772.herokuapp.com/login", {
+				email: uUser?.email,
+			})
 			.then(({ data }) => {
 				console.log(data);
 				localStorage.setItem("access-token", data?.token);

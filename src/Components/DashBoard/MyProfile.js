@@ -13,7 +13,7 @@ const MyProfile = () => {
 		return <PreLoader />;
 	}
 	useEffect(() => {
-		fetch(`http://localhost:5000/users/${user?.email}`, {
+		fetch(`https://desolate-journey-82772.herokuapp.com/users/${user?.email}`, {
 			method: "GET",
 			headers: {
 				authorization: authHeader(),

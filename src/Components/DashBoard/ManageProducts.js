@@ -10,18 +10,13 @@ const ManageProducts = () => {
 		isLoading,
 		refetch,
 	} = useQuery("users", () =>
-		fetch("http://localhost:5000/parts").then((res) => res.json())
+		fetch("https://desolate-journey-82772.herokuapp.com/parts").then((res) => res.json())
 	);
 	if (isLoading) {
 		return <PreLoader />;
 	}
 
-	// const [parts, setParts] = useState([]);
-	// useEffect(() => {
-	// fetch("https://desolate-journey-82772.herokuapp.com/parts", {})
-	// 	.then((res) => res.json())
-	// 	.then((data) => setParts(data));
-	// }, []);
+	
 	const handleDelete = (id) => {
 		fetch(`https://desolate-journey-82772.herokuapp.com/parts/${id}`, {
 			method: "DELETE",
