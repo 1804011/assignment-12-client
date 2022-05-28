@@ -55,6 +55,8 @@ const MyProfile = () => {
 	};
 	return (
 		<div className="lg:my-8 mx-4 lg:mx-12">
+			<h2 className="text-2xl text-center font-bold">My Profile</h2>
+
 			<form className="flex flex-col w-full max-w-xs" onSubmit={handleSubmit}>
 				<div class="form-control w-full max-w-xs">
 					<label class="label">
@@ -93,7 +95,6 @@ const MyProfile = () => {
 						type="text"
 						ref={instituteRef}
 						value={institution}
-						required
 						onChange={() =>
 							setProfile({
 								...profile,
@@ -110,7 +111,6 @@ const MyProfile = () => {
 					</label>
 					<input
 						type="text"
-						required
 						ref={locationRef}
 						value={location}
 						onChange={() =>
@@ -133,7 +133,6 @@ const MyProfile = () => {
 						}
 						placeholder="Your Phone"
 						class="input input-bordered w-full max-w-xs"
-						required
 					/>
 				</div>
 				<div class="form-control w-full max-w-xs">
@@ -141,7 +140,6 @@ const MyProfile = () => {
 						<span class="label-text font-semibold">LinkedIn Profile Link</span>
 					</label>
 					<input
-						required
 						type="url"
 						ref={linkedinRef}
 						value={social}
