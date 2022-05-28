@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useAuthState, useUpdateProfile } from "react-firebase-hooks/auth";
+import { toast } from "react-toastify";
 import authHeader from "../../authHeader";
 import auth from "../../firebase.init";
 import PreLoader from "../PreLoader";
@@ -44,7 +45,13 @@ const MyProfile = () => {
 				`https://desolate-journey-82772.herokuapp.com/users/${user?.email}`,
 				data
 			)
-			.then(({ data }) => {});
+			.then(({ data }) => {
+				if (data?.acknowledged) {
+					toast.success("profile update successfull");
+				} else {
+					toast.error("update is failed");
+				}
+			});
 	};
 	return (
 		<div className="lg:my-8 mx-4 lg:mx-12">

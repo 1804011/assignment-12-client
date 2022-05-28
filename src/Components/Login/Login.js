@@ -52,7 +52,7 @@ const Login = () => {
 				email: gUser?.user?.email,
 			})
 			.then(({ data }) => {
-				alert(data);
+				//alert(data);
 				localStorage.setItem("access-token", data?.token);
 			});
 	}

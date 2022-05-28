@@ -32,7 +32,13 @@ const MyOrders = () => {
 			.then((data) => {
 				if (data?.deletedCount) {
 					fetch(
-						`https://desolate-journey-82772.herokuapp.com/orders/${user?.email}`
+						`https://desolate-journey-82772.herokuapp.com/orders/${user?.email}`,
+						{
+							method: "GET",
+							headers: {
+								authorization: authHeader(),
+							},
+						}
 					)
 						.then((res) => res.json())
 						.then((data) => setOrders(data));
@@ -58,10 +64,10 @@ const MyOrders = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{orders.map((order, index) => (
+						{orders?.map((order, index) => (
 							<MyOrder
 								{...order}
-								key={index}
+								key={order._id}
 								index={index + 1}
 								handleDelete={handleDelete}
 							/>

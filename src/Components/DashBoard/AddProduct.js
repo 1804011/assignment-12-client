@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useRef } from "react";
+import { toast } from "react-toastify";
 
 const AddProduct = () => {
 	const partRef = useRef("");
@@ -36,6 +37,9 @@ const AddProduct = () => {
 						detailRef.current.value =
 						priceRef.current.value =
 							"";
+					toast.success("product added successfully");
+				} else {
+					toast.error("product addition failed");
 				}
 			});
 	};

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import auth from "../firebase.init";
 import Part from "./Home/Part";
 import Header from "./Shared/Header";
@@ -61,6 +62,9 @@ const BuyPart = () => {
 					})
 						.then((res) => res.json())
 						.then(() => {});
+					toast.success("order successfull");
+				} else {
+					toast.error("order failed");
 				}
 			});
 	};

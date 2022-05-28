@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useRef } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { toast } from "react-toastify";
 import auth from "../../firebase.init";
 import PreLoader from "../PreLoader";
 const AddReview = () => {
@@ -23,6 +24,9 @@ const AddReview = () => {
 			.then(({ data }) => {
 				if (data?.acknowledged) {
 					ratingRef.current.value = reviewRef.current.value = "";
+					toast.success("review added successfuly");
+				} else {
+					toast.error("review addition failed");
 				}
 			});
 	};

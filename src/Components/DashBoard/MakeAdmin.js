@@ -1,6 +1,7 @@
 import { signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { toast } from "react-toastify";
 import auth from "../../firebase.init";
 import PreLoader from "../PreLoader";
 const MakeAdmin = () => {
@@ -33,6 +34,9 @@ const MakeAdmin = () => {
 					fetch("https://desolate-journey-82772.herokuapp.com/users")
 						.then((res) => res.json())
 						.then((data) => setUsers(data));
+					toast.success("admin added successfully!");
+				} else {
+					toast.error("admin addition failed!!");
 				}
 			});
 	};

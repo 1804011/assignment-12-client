@@ -19,6 +19,8 @@ import AddProduct from "./Components/DashBoard/AddProduct";
 import MakeAdmin from "./Components/DashBoard/MakeAdmin";
 import ManageProducts from "./Components/DashBoard/ManageProducts";
 import RequireAdmin from "./Components/RequireAdmin";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
 	return (
 		<div>
@@ -78,6 +80,7 @@ function App() {
 					}
 				></Route>
 			</Routes>
+			<ToastContainer />
 		</div>
 	);
 }
