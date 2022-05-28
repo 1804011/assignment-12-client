@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useUpdateProfile } from "react-firebase-hooks/auth";
+import { useAuthState, useUpdateProfile } from "react-firebase-hooks/auth";
 import {
 	useCreateUserWithEmailAndPassword,
 	useSignInWithGoogle,
@@ -16,6 +16,8 @@ const Signup = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
+
+	const [uUser, uLoading, uError] = useAuthState(auth);
 	const [createUserWithEmailAndPassword, user, loading, error] =
 		useCreateUserWithEmailAndPassword(auth);
 	const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -35,8 +37,16 @@ const Signup = () => {
 				}
 			});
 	};
-	if (loading || gLoading) {
+	if (loading || gLoading || uLoading) {
 		return <PreLoader />;
+	}
+	if (uUser) {
+		axios
+			.post("http://localhost:5000/login", { email: uUser?.email })
+			.then(({ data }) => {
+				console.log(data);
+				localStorage.setItem("access-token", data?.token);
+			});
 	}
 	if (user) {
 		navigate("/login");

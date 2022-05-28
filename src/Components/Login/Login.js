@@ -35,10 +35,9 @@ const Login = () => {
 	};
 	let from = location.state?.from?.pathname || "/";
 	if (loading || gLoading || userLoading) {
-		return <PreLoader/>
+		return <PreLoader />;
 	}
 	if (userInfo) {
-		console.log("userInfo", userInfo.email);
 		axios
 			.put("https://desolate-journey-82772.herokuapp.com/users", {
 				email: userInfo?.email,
@@ -46,6 +45,14 @@ const Login = () => {
 			})
 
 			.then(({ data }) => {});
+	}
+	if (gUser) {
+		axios
+			.post("http://localhost:5000/login", { email: gUser?.user?.email })
+			.then(({ data }) => {
+				alert(data);
+				localStorage.setItem("access-token", data?.token);
+			});
 	}
 	if (user || gUser) {
 		navigate(from, { replace: true });
