@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
+import PreLoader from "../PreLoader";
 import MyOrder from "./MyOrder";
-
+import authHeader from "../../authHeader";
 const MyOrders = () => {
 	const [user, loading, error] = useAuthState(auth);
 
 	if (loading) {
-		return <p>Loading...</p>;
+		return <PreLoader />;
 	}
 	const [orders, setOrders] = useState([]);
 	useEffect(() => {
-		fetch(`https://desolate-journey-82772.herokuapp.com/orders/${user?.email}`)
+		fetch(`http://localhost:5000/orders/${user?.email}`, {
+			method: "GET",
+			headers: {
+				authorization: authHeader(),
+			},
+		})
 			.then((res) => res.json())
 			.then((data) => setOrders(data));
 	}, []);

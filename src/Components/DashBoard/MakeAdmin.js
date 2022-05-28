@@ -2,10 +2,11 @@ import { signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
+import PreLoader from "../PreLoader";
 const MakeAdmin = () => {
 	const [logged, loading, error] = useAuthState(auth);
 	if (loading) {
-		return <p>Loading...</p>;
+		return <PreLoader />;
 	}
 	const [users, setUsers] = useState([]);
 	useEffect(() => {

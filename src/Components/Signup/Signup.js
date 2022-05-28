@@ -8,6 +8,7 @@ import {
 } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import axios from "axios";
+import PreLoader from "../PreLoader";
 const Signup = () => {
 	const navigate = useNavigate();
 	const {
@@ -35,7 +36,7 @@ const Signup = () => {
 			});
 	};
 	if (loading || gLoading) {
-		return <p>Loading...</p>;
+		return <PreLoader />;
 	}
 	if (user) {
 		navigate("/login");

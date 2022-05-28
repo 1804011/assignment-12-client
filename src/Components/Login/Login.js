@@ -8,6 +8,8 @@ import {
 import auth from "../../firebase.init";
 import axios from "axios";
 import { useAuthState } from "react-firebase-hooks/auth";
+import PreLoader from "../PreLoader";
+
 const Login = () => {
 	const emailRef = useRef("");
 	const passwordRef = useRef("");
@@ -33,7 +35,7 @@ const Login = () => {
 	};
 	let from = location.state?.from?.pathname || "/";
 	if (loading || gLoading || userLoading) {
-		return <p>Loading...</p>;
+		return <PreLoader/>
 	}
 	if (userInfo) {
 		console.log("userInfo", userInfo.email);

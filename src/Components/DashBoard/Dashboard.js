@@ -3,11 +3,15 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, Outlet } from "react-router-dom";
 import auth from "../../firebase.init";
 import useAdmin from "../../Hooks/useAdmin";
+import PreLoader from "../../Components/PreLoader";
 const Dashboard = () => {
 	const [user, uLoading, uError] = useAuthState(auth);
 	const [admin, loading] = useAdmin(user?.email);
+	if (uError) {
+		return <p>error</p>;
+	}
 	if (uLoading || loading) {
-		return <p>Loading...</p>;
+		return <PreLoader />;
 	}
 
 	return (

@@ -1,20 +1,26 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useAuthState, useUpdateProfile } from "react-firebase-hooks/auth";
+import authHeader from "../../authHeader";
 import auth from "../../firebase.init";
+import PreLoader from "../PreLoader";
+
 const MyProfile = () => {
 	const [user, loading, error] = useAuthState(auth);
 	const [profile, setProfile] = useState({});
 	const [updateProfile, updating, updatingError] = useUpdateProfile(auth);
 	if (loading) {
-		return <p>Loading...</p>;
+		return <PreLoader />;
 	}
 	useEffect(() => {
-		axios
-			.get(`https://desolate-journey-82772.herokuapp.com/users/${user?.email}`)
-			.then(({ data }) => {
-				setProfile(data);
-			});
+		fetch(`http://localhost:5000/users/${user?.email}`, {
+			method: "GET",
+			headers: {
+				authorization: authHeader(),
+			},
+		})
+			.then((res) => res.json())
+			.then((data) => setProfile(data));
 	}, []);
 	const { name, email, location, social, phone, institution } = profile;
 	const nameRef = useRef(name);

@@ -3,12 +3,14 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../firebase.init";
 import useAdmin from "../Hooks/useAdmin";
 import { signOut } from "firebase/auth";
+import PreLoader from "./PreLoader";
+
 const RequireAdmin = ({ children }) => {
 	let [user, loading] = useAuthState(auth);
 	const [admin, isLoading] = useAdmin(user?.email);
 	let location = useLocation();
 	if (loading || isLoading) {
-		return <p>Loading...</p>;
+		return <PreLoader />;
 	}
 	if (!user || !admin) {
 		// Redirect them to the /login page, but save the current location they were

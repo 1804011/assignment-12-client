@@ -2,11 +2,11 @@ import axios from "axios";
 import React, { useRef } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
-
+import PreLoader from "../PreLoader";
 const AddReview = () => {
 	const [user, loading, error] = useAuthState(auth);
 	if (loading) {
-		return <p>Loading...</p>;
+		return <PreLoader />;
 	}
 	const ratingRef = useRef("");
 	const reviewRef = useRef("");
